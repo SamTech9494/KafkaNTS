@@ -1,13 +1,16 @@
 ﻿using Confluent.Kafka;
+using KafkaProject.Service;
 
-namespace KafkaProject.Service;
+namespace KafkaNTS.Service;
 
 public class ConsumerService : IConsumerService
 {
+    private readonly ILogger<ConsumerService> _logger;
     private readonly IConsumer<Null,string> _consumer;
     const string Topic = "demo";
-    public ConsumerService()
+    public ConsumerService(ILogger<ConsumerService> logger) 
     {
+        _logger = logger;
         var consumerConfig = new ConsumerConfig()
         {
             BootstrapServers = "localhost:9092"
@@ -18,20 +21,19 @@ public class ConsumerService : IConsumerService
     }
     public void Consume()
     {
-        Console.WriteLine("In consume service");
+        _logger.LogInformation("In consume service");
         var consumeResult = _consumer.Consume(CancellationToken.None);
         try
         {
-            Console.WriteLine("consumer in try");
+            _logger.LogInformation("consumer in try");
             while (true)
             {
-                Console.WriteLine(
-                    $"Consumed event from topic {Topic} with key {consumeResult.Message.Key,-10} and value {consumeResult.Message.Value}");
+                _logger.LogInformation("Consumed event from topic {Topic} with key {@MessageKey} and value {MessageValue}", Topic, consumeResult.Message.Key, consumeResult.Message.Value);
             }
         }
         catch (OperationCanceledException)
         {
-            Console.WriteLine("OperationCanceledException");
+            _logger.LogInformation("OperationCanceledException");
             // Ctrl-C was pressed.
         }
         finally

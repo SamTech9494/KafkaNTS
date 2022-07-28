@@ -1,3 +1,4 @@
+using KafkaNTS.Service;
 using KafkaProject.Service;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,7 @@
-using Confluent.Kafka;
 using KafkaProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KafkaProject.Controllers;
+namespace KafkaNTS.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -20,9 +19,9 @@ public class ConsumerController : ControllerBase
     [HttpGet(Name = "Consume")]
     public void Consume()
     {
-
-        Console.WriteLine("Consume loh");
         
+        _logger.LogInformation("Consume loh");
+
         _consumerService.Consume();
     }
 }

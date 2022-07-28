@@ -1,6 +1,7 @@
 ﻿using Confluent.Kafka;
+using KafkaProject.Service;
 
-namespace KafkaProject.Service;
+namespace KafkaNTS.Service;
 
 public class ProducerService : IProducerService
 {

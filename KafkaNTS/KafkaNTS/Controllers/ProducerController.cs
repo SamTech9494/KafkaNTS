@@ -2,7 +2,7 @@ using Confluent.Kafka;
 using KafkaProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KafkaProject.Controllers;
+namespace KafkaNTS.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -10,7 +10,6 @@ public class ProducerController : ControllerBase
 {
     private readonly ILogger<ProducerController> _logger;
     private readonly IProducerService _producerService;
-    private IProducer<Null, string>? _producer;
 
     public ProducerController(ILogger<ProducerController> logger, IProducerService producerService)
     {
@@ -21,7 +20,7 @@ public class ProducerController : ControllerBase
             BootstrapServers = "localhost:9092"
         };
 
-        _producer = new ProducerBuilder<Null, string>(producerConfig).Build();
+        new ProducerBuilder<Null, string>(producerConfig).Build();
     }
 
     [HttpGet(Name = "ProduceV2")]
